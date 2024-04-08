@@ -27,7 +27,6 @@ setattr(Point, 'draw', point_draw)
 setattr(Segment, 'draw', segment_draw)
 setattr(Polygon, 'draw', polygon_draw)
 
-
 tk = TkDrawer()
 f = Void()
 tk.clean()
@@ -35,9 +34,15 @@ tk.clean()
 try:
     while True:
         f = f.add(R2Point())
+        a = [
+            R2Point(0.0, 0.0),
+            R2Point(0.0, 3.0),
+            R2Point(3.0, 0.0),
+            R2Point(3.0, 3.0)
+        ]
         tk.clean()
         f.draw(tk)
-        print(f"S = {f.area()}, P = {f.perimeter()}\n")
+        print(f"S = {f.area()}, P = {f.perimeter(),}, C = {f.cvad(a)}\n")
 except (EOFError, KeyboardInterrupt):
     print("\nStop")
     tk.close()
