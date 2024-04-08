@@ -6,7 +6,13 @@ f = Void()
 try:
     while True:
         f = f.add(R2Point())
-        print(f"S = {f.area()}, P = {f.perimeter()}")
+        a = [
+            R2Point(0.0, 0.0),
+            R2Point(0.0, 3.0),
+            R2Point(3.0, 0.0),
+            R2Point(3.0, 3.0)
+        ]
+        print(f"S = {f.area()}, P = {f.perimeter()}, C = {f.cvad(a)}")
         print()
 except (EOFError, KeyboardInterrupt):
     print("\nStop")

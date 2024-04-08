@@ -11,16 +11,19 @@ class Figure:
     def area(self):
         return 0.0
 
+    def cvad(self, a):
+        return 0.0
+
 
 class Void(Figure):
-    """ "Hульугольник" """
+    """ "Hульугольник(лол)" """
 
     def add(self, p):
         return Point(p)
 
 
 class Point(Figure):
-    """ "Одноугольник" """
+    """ "Одноугольник(лол)" """
 
     def __init__(self, p):
         self.p = p
@@ -41,12 +44,12 @@ class Segment(Figure):
     def add(self, r):
         if R2Point.is_triangle(self.p, self.q, r):
             return Polygon(self.p, self.q, r)
-        elif r.is_inside(self.p, self.q):
-            return self
+        elif self.q.is_inside(self.p, r):
+            return Segment(self.p, r)
         elif self.p.is_inside(r, self.q):
             return Segment(r, self.q)
         else:
-            return Segment(self.p, r)
+            return self
 
 
 class Polygon(Figure):
@@ -82,11 +85,10 @@ class Polygon(Figure):
         # хотя бы одно освещённое ребро есть
         if t.is_light(self.points.last(), self.points.first()):
 
-            # учёт удаления ребра, соединяющего конец и начало дека
+            # учёт удаления ребра,  соединяющего конец и начало дека
             self._perimeter -= self.points.first().dist(self.points.last())
-            self._area += abs(R2Point.area(t,
-                                           self.points.last(),
-                                           self.points.first()))
+            self._area += abs(
+                R2Point.area(t, self.points.last(), self.points.first()))
 
             # удаление освещённых рёбер из начала дека
             p = self.points.pop_first()
@@ -111,13 +113,46 @@ class Polygon(Figure):
 
         return self
 
+    def cvad(self, a):
+        count = 0
+        for i in range(self.points.size()):
+            p1 = self.points.first()
+            p2 = self.points.last()
 
-if __name__ == "__main__":  # pragma: no cover
+            # Проверяем,  что оба конца ребра внутри квадрата
+            if p1.is_inside(a[0], a[3]) and p2.is_inside(a[0], a[3]):
+                count += 1
+            self.points.push_last(self.points.pop_first())
+        return count
+
+
+if __name__ == "__main__":
+    a = [
+        R2Point(0.0, 0.0),
+        R2Point(0.0, 3.0),
+        R2Point(3.0, 0.0),
+        R2Point(3.0, 3.0)
+    ]
     f = Void()
     print(type(f), f.__dict__)
     f = f.add(R2Point(0.0, 0.0))
     print(type(f), f.__dict__)
-    f = f.add(R2Point(1.0, 0.0))
+    f = f.add(R2Point(0.0, 3.0))
     print(type(f), f.__dict__)
-    f = f.add(R2Point(0.0, 1.0))
+    f = f.add(R2Point(3.0, 0.0))
+    print(f.cvad(a))
     print(type(f), f.__dict__)
+    f = f.add(R2Point(3.0, 3.0))
+    print(f.cvad(a))
+    f = f.add(R2Point(2.0, 2.0))
+    print(f.cvad(a))
+    f = f.add(R2Point(2.0, 4.0))
+    print(f.cvad(a))
+    f = f.add(R2Point(4.0, 4.0))
+    print(f.cvad(a))
+    f = f.add(R2Point(-1.0, 4.0))
+    print(f.cvad(a))
+    f = f.add(R2Point(-1.0, -1.0))
+    print(f.cvad(a))
+    f = f.add(R2Point(1.0, 1.0))
+    print(f.cvad(a))
