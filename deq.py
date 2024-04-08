@@ -1,4 +1,10 @@
 class Deq:
+    """
+    Реализация дека на базе вектора
+    для языка Python она тривиальна)
+    """
+    # Конструктор
+
     def __init__(self):
         self.array = []
 
@@ -31,7 +37,7 @@ class Deq:
         return self.array[0]
 
 
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     s = Deq()
     print(s.__dict__)
     s.push_first(1)

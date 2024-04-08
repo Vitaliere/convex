@@ -2,6 +2,9 @@ from math import sqrt
 
 
 class R2Point:
+    """ Точка (Point) на плоскости (R2) """
+
+    # Конструктор
     def __init__(self, x=None, y=None):
         if x is None:
             x = float(input("x -> "))
@@ -42,9 +45,9 @@ class R2Point:
         return False
 
 
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     x = R2Point(1.0, 1.0)
     print(type(x), x.__dict__)
-    print(x.dist(R2Point(4.0, 5.0)))
+    print(x.dist(R2Point(1.0, 0.0)))
     a, b, c = R2Point(0.0, 0.0), R2Point(1.0, 0.0), R2Point(1.0, 1.0)
     print(R2Point.area(a, c, b))
